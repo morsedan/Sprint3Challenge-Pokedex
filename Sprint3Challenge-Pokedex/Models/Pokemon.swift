@@ -9,7 +9,7 @@
 import Foundation
 
 struct Pokemon: Codable, Hashable {
-    let name: String
+    var name: String
     let id: Int
     let abilities: [Ability]
     let types: [TypeObject]

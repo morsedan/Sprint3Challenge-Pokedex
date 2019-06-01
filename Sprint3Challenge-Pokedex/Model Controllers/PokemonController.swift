@@ -44,8 +44,10 @@ class PokemonController {
             decoder.keyDecodingStrategy = .convertFromSnakeCase
             
             do {
-                let pokemons = try decoder.decode(Pokemon.self, from: data)
-                completion(.success(pokemons))
+                var pokemon = try decoder.decode(Pokemon.self, from: data)
+                print(pokemon.name.capitalized)
+                pokemon.name = pokemon.name.capitalized
+                completion(.success(pokemon))
             } catch {
                 NSLog("Error decoding pokemon object: \(error)")
                 completion(.failure(.noDecode))
