@@ -13,30 +13,28 @@ class PokemonTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 0
+        return pokemonController.pokemons.count
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
-
-        // Configure the cell...
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: "PokemonCell", for: indexPath)
+        
+        let pokemon = pokemonController.pokemons[indexPath.row]
+        cell.textLabel?.text = pokemon.name
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
@@ -82,10 +80,11 @@ class PokemonTableViewController: UITableViewController {
             if let searchVC = segue.destination as? SearchViewController {
                 searchVC.pokemonController = pokemonController
             }
+        } else if segue.identifier == "DetailSegue" {
+            if let detailVC = segue.destination as? DetailViewController {
+                guard let index = tableView.indexPathForSelectedRow?.row else { return }
+                detailVC.pokemon = pokemonController.pokemons[index]
+            }
         }
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
     }
-    
-
 }
