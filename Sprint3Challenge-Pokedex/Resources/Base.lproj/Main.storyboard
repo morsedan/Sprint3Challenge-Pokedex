@@ -238,6 +238,7 @@
                         <outlet property="idLabel" destination="HwE-AH-58V" id="q3t-xa-34b"/>
                         <outlet property="imageView" destination="AIz-h6-0dd" id="w4M-JV-4W1"/>
                         <outlet property="nameLabel" destination="QXU-vd-Mvt" id="XYg-4d-NTu"/>
+                        <outlet property="saveButton" destination="Q52-Aa-rkc" id="WLY-Zd-2H6"/>
                         <outlet property="searchBar" destination="a4l-jn-mA4" id="pQc-do-iwy"/>
                         <outlet property="typesLabel" destination="BC7-dw-a56" id="G3S-2f-cnV"/>
                     </connections>
