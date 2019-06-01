@@ -56,9 +56,7 @@ class PokemonController {
     
     func savePokemon(_ pokemon: Pokemon) {
         pokemons.append(pokemon)
-        for pokemon in pokemons {
-            print(pokemon.name)
-        }
+        pokemons.sort { $0.name < $1.name}
     }
     
     func fetchImage(at URLString: String, completion: @escaping (Result<UIImage, NetworkError>) -> ()) {
