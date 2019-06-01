@@ -55,6 +55,9 @@ class PokemonController {
     }
     
     func savePokemon(_ pokemon: Pokemon) {
+        if pokemons.contains(pokemon) {
+            return
+        }
         pokemons.append(pokemon)
         pokemons.sort { $0.name < $1.name}
     }

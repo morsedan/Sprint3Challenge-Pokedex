@@ -22,7 +22,6 @@ class PokemonTableViewController: UITableViewController {
     // MARK: - Table view data source
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return pokemonController.pokemons.count
     }
 
@@ -35,9 +34,6 @@ class PokemonTableViewController: UITableViewController {
         return cell
     }
     
-
-    
-    // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             pokemonController.pokemons.remove(at: indexPath.row)
