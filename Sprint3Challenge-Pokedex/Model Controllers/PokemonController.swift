@@ -80,8 +80,4 @@ class PokemonController {
             completion(.success(image))
         }.resume()
     }
-    
-    
-    
-    
 }

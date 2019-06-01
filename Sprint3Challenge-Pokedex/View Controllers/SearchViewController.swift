@@ -58,7 +58,6 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         showLabels()
         
         nameLabel.text = pokemon.name
-//        imageView
         idLabel.text = "ID: \(pokemon.id)"
         typesLabel.text = typeArray.joined(separator: ", ")
         abilitiesLabel.text = abilitiesArray.joined(separator: ", ")
@@ -88,17 +87,4 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         abilitiesLabel.isHidden = false
         saveButton.isHidden = false
     }
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
