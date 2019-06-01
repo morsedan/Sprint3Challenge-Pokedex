@@ -50,10 +50,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         var typeArray: [String] = []
         var abilitiesArray: [String] = []
         for item in pokemon.types {
-            typeArray.append(item.type.name)
+            typeArray.append(item.type.name.capitalized)
         }
         for item in pokemon.abilities {
-            abilitiesArray.append(item.ability.name)
+            abilitiesArray.append(item.ability.name.capitalized)
         }
         hideLabels(false)
         

@@ -28,17 +28,17 @@ class DetailViewController: UIViewController {
         var typeArray: [String] = []
         var abilitiesArray: [String] = []
         for item in pokemon.types {
-            typeArray.append(item.type.name)
+            typeArray.append(item.type.name.capitalized)
         }
         for item in pokemon.abilities {
-            abilitiesArray.append(item.ability.name)
+            abilitiesArray.append(item.ability.name.capitalized)
         }
         
         self.navigationItem.title = pokemon.name
         nameLabel.text = pokemon.name
         idLabel.text = "ID: \(pokemon.id)"
-        typesLabel.text = typeArray.joined(separator: ", ")
-        abilitiesLabel.text = abilitiesArray.joined(separator: ", ")
+        typesLabel.text = "Types: \(typeArray.joined(separator: ", "))"
+        abilitiesLabel.text = "Abilities: \(abilitiesArray.joined(separator: ", "))"
         pokemonController?.fetchImage(at: pokemon.sprites.frontShiny, completion: { result in
             if let image = try? result.get() {
                 DispatchQueue.main.async {
