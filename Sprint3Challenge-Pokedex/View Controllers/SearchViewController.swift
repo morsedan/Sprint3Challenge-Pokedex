@@ -58,6 +58,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         idLabel.text = "ID: \(pokemon.id)"
         typesLabel.text = typeArray.joined(separator: ", ")
         abilitiesLabel.text = abilitiesArray.joined(separator: ", ")
+        pokemonController?.fetchImage(at: pokemon.sprites.frontShiny, completion: { result in
+            if let image = try? result.get() {
+                DispatchQueue.main.async {
+                    self.imageView.image = image
+                }
+            }
+        })
     }
     
     func hideLabels() {

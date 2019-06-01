@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 enum HTTPMethod: String {
     case get = "GET"
@@ -58,8 +59,26 @@ class PokemonController {
         
     }
     
-    func fetchImage() {
+    func fetchImage(at URLString: String, completion: @escaping (Result<UIImage, NetworkError>) -> ()) {
         
+        let imageURL = URL(string: URLString)!
+        
+        var request = URLRequest(url: imageURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { (data, _, error) in
+            if let _ = error {
+                completion(.failure(.otherError))
+            }
+            
+            guard let data = data else {
+                completion(.failure(.badData))
+                return
+            }
+            
+            let image = UIImage(data: data)!
+            completion(.success(image))
+        }.resume()
     }
     
     

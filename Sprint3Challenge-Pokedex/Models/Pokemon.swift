@@ -13,7 +13,7 @@ struct Pokemon: Codable, Hashable {
     let id: Int
     let abilities: [Ability]
     let types: [TypeObject]
-//    let sprites: [Sprite]
+    let sprites: Sprite
 }
 
 struct Ability: Codable, Hashable {
@@ -33,5 +33,5 @@ struct TypeCharacteristic: Codable, Hashable {
 }
 
 struct Sprite: Codable, Hashable {
-    let frontShiney: URL
+    let frontShiny: String
 }
