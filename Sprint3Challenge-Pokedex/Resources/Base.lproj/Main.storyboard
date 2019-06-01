@@ -139,6 +139,13 @@
                         <viewLayoutGuide key="safeArea" id="IO5-jq-O9l"/>
                     </view>
                     <navigationItem key="navigationItem" title="Name!" id="Cie-UY-yKu"/>
+                    <connections>
+                        <outlet property="abilitiesLabel" destination="jbz-tv-3Rc" id="s8i-5C-BRp"/>
+                        <outlet property="idLabel" destination="6ab-yx-oAW" id="7vQ-Z3-Q9x"/>
+                        <outlet property="imageView" destination="Ktd-Up-7AX" id="icP-rc-J7J"/>
+                        <outlet property="nameLabel" destination="1u7-Ie-cdJ" id="a4o-Hw-yxd"/>
+                        <outlet property="typesLabel" destination="L8g-xN-xLQ" id="iMk-PF-3Wi"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L2U-gZ-Ufk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

@@ -56,21 +56,6 @@ class PokemonTableViewController: UITableViewController {
     }
     */
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
     
     // MARK: - Navigation
 
@@ -84,6 +69,7 @@ class PokemonTableViewController: UITableViewController {
             if let detailVC = segue.destination as? DetailViewController {
                 guard let index = tableView.indexPathForSelectedRow?.row else { return }
                 detailVC.pokemon = pokemonController.pokemons[index]
+                detailVC.pokemonController = pokemonController
             }
         }
     }
