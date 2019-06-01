@@ -51,12 +51,14 @@ class PokemonController {
                 completion(.failure(.noDecode))
                 return
             }
-            print("SEARCHING CONTROLLER")
         }.resume()
     }
     
-    func savePokemon() {
-        
+    func savePokemon(_ pokemon: Pokemon) {
+        pokemons.append(pokemon)
+        for pokemon in pokemons {
+            print(pokemon.name)
+        }
     }
     
     func fetchImage(at URLString: String, completion: @escaping (Result<UIImage, NetworkError>) -> ()) {

@@ -32,13 +32,17 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         pokemonController?.searchForPokemon(with: searchTerm, completion: { result in
             if let pokemon = try? result.get() {
                 DispatchQueue.main.async {
-                    self.displayPokemon(with: pokemon)
+                    self.pokemon = pokemon
+                    self.displayPokemon(with: self.pokemon)
                 }
             }
         })
     }
     
     @IBAction func saveButtonTapped(_ sender: Any) {
+        guard let pokemon = self.pokemon else { return }
+        pokemonController?.savePokemon(pokemon)
+        self.navigationController?.popViewController(animated: true)
     }
     
     func displayPokemon(with pokemon: Pokemon?) {
