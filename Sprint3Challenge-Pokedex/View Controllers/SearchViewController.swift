@@ -23,7 +23,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        hideLabels()
+        hideLabels(true)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -55,12 +55,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         for item in pokemon.abilities {
             abilitiesArray.append(item.ability.name)
         }
-        showLabels()
+        hideLabels(false)
         
         nameLabel.text = pokemon.name
         idLabel.text = "ID: \(pokemon.id)"
-        typesLabel.text = typeArray.joined(separator: ", ")
-        abilitiesLabel.text = abilitiesArray.joined(separator: ", ")
+        typesLabel.text = "Types: \(typeArray.joined(separator: ", "))"
+        abilitiesLabel.text = "Abilities: \(abilitiesArray.joined(separator: ", "))"
         pokemonController?.fetchImage(at: pokemon.sprites.frontShiny, completion: { result in
             if let image = try? result.get() {
                 DispatchQueue.main.async {
@@ -70,21 +70,9 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         })
     }
     
-    func hideLabels() {
-        nameLabel.isHidden = true
-        imageView.isHidden = true
-        idLabel.isHidden = true
-        typesLabel.isHidden = true
-        abilitiesLabel.isHidden = true
-        saveButton.isHidden = true
-    }
-    
-    func showLabels() {
-        nameLabel.isHidden = false
-        imageView.isHidden = false
-        idLabel.isHidden = false
-        typesLabel.isHidden = false
-        abilitiesLabel.isHidden = false
-        saveButton.isHidden = false
+    func hideLabels(_ status: Bool) {
+        
+        let labels = [nameLabel, imageView, idLabel, typesLabel, abilitiesLabel, saveButton]
+        labels.map { $0?.isHidden = status }
     }
 }
