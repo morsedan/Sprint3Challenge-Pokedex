@@ -84,14 +84,14 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         _ = labels.map { $0?.isHidden = status }
         
         for label in labels {
-            label?.isHidden = true
+            label?.isHidden = status
         }
         
-        nameLabel.isHidden = true
-        imageView.isHidden = true
-        idLabel.isHidden = true
-        typesLabel.isHidden = true
-        abilitiesLabel.isHidden = true
+        nameLabel.isHidden = status
+        imageView.isHidden = status
+        idLabel.isHidden = status
+        typesLabel.isHidden = status
+        abilitiesLabel.isHidden = status
     }
     
     func toggleSearch() {
