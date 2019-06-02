@@ -14,6 +14,20 @@ struct Pokemon: Codable, Hashable {
     let abilities: [Ability]
     let types: [TypeObject]
     let sprites: Sprite
+    
+    
+    // I added these two computed properties to the Pokemon type, so that you can just do this formatting in one place, but you get the strings anywhere you have a Pokemon.
+    var abilityString: String {
+        let array = abilities.map { $0.ability.name.capitalized }
+        return array.joined(separator: ", ")
+    }
+    
+    var typeString: String {
+        let array = types.map { $0.type.name.capitalized }
+        return array.joined(separator: ", ")
+    }
+    
+    
 }
 
 struct Ability: Codable, Hashable {

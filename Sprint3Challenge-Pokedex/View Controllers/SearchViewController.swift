@@ -17,14 +17,18 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     @IBOutlet var searchBar: UISearchBar!
     @IBOutlet var saveButton: UIButton!
     
+    // New property to hold references to labels
+    var labels: [UIView] = []
+    
     var pokemonController: PokemonController?
     var pokemon: Pokemon?
     var searchOff = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        searchBar.delegate = self
-        displayPokemon(with: pokemon)
+        
+        setupViews()
+        updateViews()
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
@@ -35,7 +39,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
             if let pokemon = try? result.get() {
                 DispatchQueue.main.async {
                     self.pokemon = pokemon
-                    self.displayPokemon(with: self.pokemon)
+                    self.updateViews()
                     self.saveButton.isHidden = false
                 }
             }
@@ -48,61 +52,55 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         self.navigationController?.popViewController(animated: true)
     }
     
-    func displayPokemon(with pokemon: Pokemon?) {
+    // I tend to pull out one-time setup type things into its own funciton like this. Just so I know where to put all the stuff that I want to happen once, at the beginning.
+    private func setupViews() {
+        // By the time you get here, these all exist, so you can fill the array with them.
+        labels = [nameLabel, imageView, idLabel, typesLabel, abilitiesLabel]
         
-        guard let pokemon = pokemon else {
-            toggleSearch()
-            return
+        // Start with save button hidden
+        saveButton.isHidden = true
+        
+        // If there is a pokemon right now, it means we were given one by the tableView. So we don't need the search bar, but we should update the title
+        if let pokemon = pokemon {
+            searchBar.isHidden = true
+            title = pokemon.name
         }
-        toggleSearch()
-        var typeArray: [String] = []
-        var abilitiesArray: [String] = []
-        for item in pokemon.types {
-            typeArray.append(item.type.name.capitalized)
-        }
-        for item in pokemon.abilities {
-            abilitiesArray.append(item.ability.name.capitalized)
-        }
-        hideLabels(false)
+        
+        searchBar.delegate = self
+    }
+    
+    // I tend to put anything that needs to be update in the state of a view in a function like this. It generally holds all the logic for what needs to be updated based on the model, so that anywhere I need to update the state, I can just call updateViews().
+    private func updateViews() {
+        updateLabels()
+        
+        // If there is no pokemon, the rest of this function doesn't need to run.
+        guard let pokemon = pokemon else { return }
         
         nameLabel.text = pokemon.name
         idLabel.text = "ID: \(pokemon.id)"
-        typesLabel.text = "Types: \(typeArray.joined(separator: ", "))"
-        abilitiesLabel.text = "Abilities: \(abilitiesArray.joined(separator: ", "))"
-        pokemonController?.fetchImage(at: pokemon.sprites.frontShiny, completion: { result in
+        typesLabel.text = "Types: \(pokemon.typeString)"
+        abilitiesLabel.text = "Abilities: \(pokemon.abilityString)"
+        load(pokemon.sprites.frontShiny)
+    }
+    
+    // I renamed this to updateLabels, because it fit what it is doing better, after the changes I made.
+    func updateLabels() {
+        // If there is no pokemon, we don't want to show the labels
+        let status = pokemon == nil
+        
+        labels.forEach { $0.isHidden = status }
+        
+    }
+    
+    // I pulled this out to its own function, partially because of its complexity, and partially because this would make it easier to improve. Say, if you had the image cached somewhere.
+    private func load(_ sprite: String) {
+        pokemonController?.fetchImage(at: sprite, completion: { result in
             if let image = try? result.get() {
                 DispatchQueue.main.async {
                     self.imageView.image = image
                 }
             }
         })
-    }
-    
-    func hideLabels(_ status: Bool) {
-        
-        let labels = [nameLabel, imageView, idLabel, typesLabel, abilitiesLabel]
-        _ = labels.map { $0?.isHidden = status }
-        
-        for label in labels {
-            label?.isHidden = true
-        }
-        
-        nameLabel.isHidden = true
-        imageView.isHidden = true
-        idLabel.isHidden = true
-        typesLabel.isHidden = true
-        abilitiesLabel.isHidden = true
-    }
-    
-    func toggleSearch() {
-        saveButton.isHidden = true
-        if searchOff {
-            searchBar.isHidden = true
-            saveButton.isHidden = true
-            self.navigationItem.title = pokemon?.name
-        } else {
-            hideLabels(true)
-        }
     }
 }
 
