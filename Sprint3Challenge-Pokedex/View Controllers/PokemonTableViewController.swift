@@ -31,6 +31,12 @@ class PokemonTableViewController: UITableViewController {
         
         let pokemon = pokemonController.pokemons[indexPath.row]
         cell.textLabel?.text = pokemon.name
+        
+        // Now, if we have data saved for a pokemon, we can load it on the tableView too.
+        if let data = pokemon.imageData {
+            cell.imageView?.image = UIImage(data: data)
+        }
+        
         return cell
     }
     

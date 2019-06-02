@@ -14,6 +14,9 @@ struct Pokemon: Codable, Hashable {
     let abilities: [Ability]
     let types: [TypeObject]
     let sprites: Sprite
+
+    // Add a variable to hold the image data once the sprite is fetched
+    var imageData: Data?
     
     
     // I added these two computed properties to the Pokemon type, so that you can just do this formatting in one place, but you get the strings anywhere you have a Pokemon.

@@ -80,7 +80,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         idLabel.text = "ID: \(pokemon.id)"
         typesLabel.text = "Types: \(pokemon.typeString)"
         abilitiesLabel.text = "Abilities: \(pokemon.abilityString)"
-        load(pokemon.sprites.frontShiny)
+        loadImage(for: pokemon)
     }
     
     // I renamed this to updateLabels, because it fit what it is doing better, after the changes I made.
@@ -93,10 +93,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     // I pulled this out to its own function, partially because of its complexity, and partially because this would make it easier to improve. Say, if you had the image cached somewhere.
-    private func load(_ sprite: String) {
-        pokemonController?.fetchImage(at: sprite, completion: { result in
-            if let image = try? result.get() {
+    private func loadImage(for pokemon: Pokemon) {
+        pokemonController?.fetchImage(for: pokemon, completion: { result in
+            if let data = try? result.get() {
                 DispatchQueue.main.async {
+                    let image = UIImage(data: data)
+                    self.pokemon?.imageData = data
                     self.imageView.image = image
                 }
             }

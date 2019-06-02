@@ -63,7 +63,10 @@ class PokemonController {
         pokemons.sort { $0.name < $1.name}
     }
     
-    func fetchImage(at URLString: String, completion: @escaping (Result<UIImage, NetworkError>) -> ()) {
+    // I changed this to take a pokemon, because I felt it simplified things, and it returns Data, so that can be used elsewhere.
+    func fetchImage(for pokemon: Pokemon, completion: @escaping (Result<Data, NetworkError>) -> ()) {
+        
+        let URLString = pokemon.sprites.frontShiny
         
         let imageURL = URL(string: URLString)!
         
@@ -79,9 +82,8 @@ class PokemonController {
                 completion(.failure(.badData))
                 return
             }
-            
-            let image = UIImage(data: data)!
-            completion(.success(image))
+
+            completion(.success(data))
         }.resume()
     }
 }
