@@ -94,6 +94,13 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     // I pulled this out to its own function, partially because of its complexity, and partially because this would make it easier to improve. Say, if you had the image cached somewhere.
     private func loadImage(for pokemon: Pokemon) {
+        // Now that we have imageData stored with the Pokemon, we can check for that before making a network call
+        if let data = pokemon.imageData {
+            imageView.image = UIImage(data: data)
+            return
+        }
+        
+        // If we get here, it means we haven't previously stored the data for that pokemon, so we actually need to make the network call.
         pokemonController?.fetchImage(for: pokemon, completion: { result in
             if let data = try? result.get() {
                 DispatchQueue.main.async {
