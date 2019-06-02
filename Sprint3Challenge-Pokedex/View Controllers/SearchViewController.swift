@@ -81,7 +81,17 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     func hideLabels(_ status: Bool) {
         
         let labels = [nameLabel, imageView, idLabel, typesLabel, abilitiesLabel]
-        labels.map { $0?.isHidden = status }
+        _ = labels.map { $0?.isHidden = status }
+        
+        for label in labels {
+            label?.isHidden = true
+        }
+        
+        nameLabel.isHidden = true
+        imageView.isHidden = true
+        idLabel.isHidden = true
+        typesLabel.isHidden = true
+        abilitiesLabel.isHidden = true
     }
     
     func toggleSearch() {
@@ -89,8 +99,10 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
         if searchOff {
             searchBar.isHidden = true
             saveButton.isHidden = true
+            self.navigationItem.title = pokemon?.name
         } else {
             hideLabels(true)
         }
     }
 }
+
