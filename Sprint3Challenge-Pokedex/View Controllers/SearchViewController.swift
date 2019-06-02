@@ -19,14 +19,16 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     var pokemonController: PokemonController?
     var pokemon: Pokemon?
+    var searchOff = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.delegate = self
-        hideLabels(true)
+        displayPokemon(with: pokemon)
     }
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        
         guard let searchTerm = searchBar.text else { return }
         
         pokemonController?.searchForPokemon(with: searchTerm, completion: { result in
@@ -34,6 +36,7 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
                 DispatchQueue.main.async {
                     self.pokemon = pokemon
                     self.displayPokemon(with: self.pokemon)
+                    self.saveButton.isHidden = false
                 }
             }
         })
@@ -46,7 +49,12 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     }
     
     func displayPokemon(with pokemon: Pokemon?) {
-        guard let pokemon = pokemon else { return }
+        
+        guard let pokemon = pokemon else {
+            toggleSearch()
+            return
+        }
+        toggleSearch()
         var typeArray: [String] = []
         var abilitiesArray: [String] = []
         for item in pokemon.types {
@@ -72,7 +80,17 @@ class SearchViewController: UIViewController, UISearchBarDelegate {
     
     func hideLabels(_ status: Bool) {
         
-        let labels = [nameLabel, imageView, idLabel, typesLabel, abilitiesLabel, saveButton]
+        let labels = [nameLabel, imageView, idLabel, typesLabel, abilitiesLabel]
         labels.map { $0?.isHidden = status }
+    }
+    
+    func toggleSearch() {
+        saveButton.isHidden = true
+        if searchOff {
+            searchBar.isHidden = true
+            saveButton.isHidden = true
+        } else {
+            hideLabels(true)
+        }
     }
 }

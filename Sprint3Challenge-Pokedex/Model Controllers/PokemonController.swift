@@ -28,7 +28,7 @@ class PokemonController {
         
         var request = URLRequest.init(url: pokemonURL)
         request.httpMethod = HTTPMethod.get.rawValue
-        print(request)
+        
         URLSession.shared.dataTask(with: request) { (data, _, error) in
             if let _ = error {
                 completion(.failure(.otherError))
@@ -45,7 +45,6 @@ class PokemonController {
             
             do {
                 var pokemon = try decoder.decode(Pokemon.self, from: data)
-                print(pokemon.name.capitalized)
                 pokemon.name = pokemon.name.capitalized
                 completion(.success(pokemon))
             } catch {
